@@ -104,7 +104,7 @@ function App() {
             <h1 className='text-amber-300 text-[2rem]'>Painel de vendas</h1>
           </header>
 
-          <section className='mx-auto flex flex-col gap-3.5 justify-start items-center w-[80vw] min-h-[100vh] border-1'>
+          <section className='mx-auto flex flex-col gap-3.5 justify-center items-center w-[80vw] min-h-[100vh] border-1'>
 
             <form className=' flex flex-col gap-1.5 items-center justify-start  text-black text-[1.2rem]  w-2/3 min-h-[320px]'>
               <strong className='text-white text-3xl ' htmlFor="produto">Pesquisar</strong>
