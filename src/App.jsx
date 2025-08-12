@@ -202,9 +202,13 @@ function App() {
 
               <button className='bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                 onClick={() => {
+                  if(produtos.length > 0){
                   const funcionario = Number(prompt('Insira o seu ID'))
                   vender(funcionario, produtos)
                   console.log('você comprou:', produtos);
+                  }else{
+                    alert('Insira um produto')
+                  } 
                 }}
               >Finalizar
               </button>
