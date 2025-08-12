@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+:root {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  font-family: sans-serif;
+  text-decoration: none;
+  list-style-type: none;
+  color: rgb(0, 0, 0);
+  background: rgb(31, 27, 46);
+  position: relative;
+}
+
