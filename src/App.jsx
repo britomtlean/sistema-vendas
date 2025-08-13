@@ -6,27 +6,32 @@ import DataTable from 'react-data-table-component';
 import Vendas from './Vendas';
 
 
-
 function App() {
 
   const [search, setSearch] = useState('')
   const [quantidade, setQuantidade] = useState({})
   const [valoTotal, setValorTotal] = useState({})
   const [produtos, setProdutos,] = useState([])
+  const [valorPedido, setValorPedido] = useState([0.00])
 
   const { component, setComponent } = useContext(contextVenda)
   const { items } = useProducts()
 
+  useEffect(() => {
+    console.log('total de produtos: ', produtos)
+    const somaTotal = produtos.reduce((acumulador, item) => acumulador + item.total, 0);
+    setValorPedido(somaTotal)
+  }, [produtos, quantidade])
+
   const createProduct = (e, array,) => {
     e.preventDefault()
 
-
     // Verifica se o produto já existe no carrinho
-    const jaExiste = produtos.some(prod => prod.id === array.id_produtos);
-    if (jaExiste) {
+    const confirmProduct = produtos.some(prod => prod.id === array.id_produtos);
+    if (confirmProduct) {
       alert('Este produto já está no carrinho!');
       return;
-    } //feito por IA
+    }
 
     const quantidadeValor = 1
 
@@ -47,7 +52,6 @@ function App() {
 
   const addProduct = (e, array, index) => {
     e.preventDefault();
-    console.log('array: ', produtos)
     produtos.forEach((array, i) => {
       if (i == index) {
         array.quantidade += 1
@@ -63,7 +67,7 @@ function App() {
           [array.id]: array.total
         }))
 
-        console.log(array)
+        console.log('quantidade inserida: ', array)
         //console.log('objeto selecionado: ',quantidade[array.id])  
       }
     })
@@ -91,6 +95,26 @@ function App() {
         //console.log('objeto selecionado: ',quantidade[array.id])  
       }
     })
+  }
+
+  const removeProduct = (produto) => {
+    const produtosFiltrados = produtos.filter(array => {
+      if (array.id != produto.id) {
+        console.log(array)
+        return array
+      }
+    })
+    //console.log(produtosFiltrados)
+    setProdutos(produtosFiltrados)
+    setQuantidade(prev => ({
+      ...prev,
+      [produto.id]: 1
+    }))
+
+    setValorTotal(prev => ({
+      ...prev,
+      [produto.id]: produto.valorUni
+    }))
   }
 
 
@@ -125,7 +149,7 @@ function App() {
                       //const object = array.id_produtos
                       //const valor = (!quantidade[object]) ? 1 : quantidade[object]
                       return (
-                        <ul className='bg-gray-100 mb-1.5 border-b-1 w-full flex justify-between items-center flex-wrap text-center min-h-14 rounded-[8px]' key={array.id_produtos}>
+                        <ul className='bg-gray-100 mb-1.5 p-1.5 border-b-1 w-full flex justify-between items-center flex-wrap text-center h-14 rounded-[8px]' key={array.id_produtos}>
                           <li className='flex-1/4'>{array.produto_produtos}</li>
 
                           <li className='flex-1/4'>Valor: R$ {array.valor_produtos}</li>
@@ -135,17 +159,9 @@ function App() {
                             <button className='bg-blue-500 w-7 h-7 rounded-[30%] hover:cursor-pointer'
                               onClick={(e) => { addProduct(e, object) }}>+</button>*/}
                           </li>
-                          <button className='flex-1/9 h-[56px] bg-blue-500 hover:cursor-pointer rounded-[8px]'
+                          <button className='flex-1/9 h-full bg-blue-500 text-white font-bold hover:cursor-pointer rounded-[8px]'
                             onClick={(e) => {
-                              createProduct(e, array, index)
-                              /*
-                              if (!valor) {
-                                alert('Insira uma quantidade');
-                                e.preventDefault();
-                              } else {
-                                createProduct(e, array);
-                              }
-                                */
+                              createProduct(e, array, index);
                             }}
                           >Adicionar</button>
                         </ul>
@@ -154,30 +170,26 @@ function App() {
               </div>
             </form>
 
-            <div className='w-2/3 p-2 flex flex-col items-center justify-center bg-gray-500' >
-              <strong>Carrinho</strong>
+            <div className='w-2/3 py-5 flex flex-col items-center justify-center gap-0.5 bg-gray-600 rounded-[8px]' >
+              <strong className='text-2xl mb-2.5 text-white'>Carrinho</strong>
 
-              {/*<DataTable className='w-2/3 p-2 flex flex-col items-center justify-center text-centertext-[1.2rem]'
-                title="Produtos Selecionados"
-                columns={[
-                  { name: 'ID', selector: row => row.id, sortable: true },
-                  { name: 'Produto', selector: row => row.nome, sortable: true },
-                  { name: 'Valor', selector: row => row.valorUni.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }), sortable: true },
-                  { name: 'Quantidade', selector: row => row.quantidade, sortable: true },
-                  { name: 'Total', selector: row => row.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }), sortable: true },
-                ]}
-                data={produtos}
-                pagination
-              />*/}
-              {/***********************************************************CARRINHO************************************************************************ */}
+              {/***********************************************************CARRINHO***********************************************************/}
+              <ul className='flex justify-between items-center p-1.5 w-4/5 h-14 text-center font-bold border-1 bg-gray-100 rounded-[8px]'>
+                <li className='flex-1/7 mr-10'>Id</li>
+                <li className='flex-1/6 mr-12 '>Produto</li>
+                <li className='flex-1/6 mr-3  '>Valor</li>
+                <li className='flex-1/7 mr-12'>Quantidade</li>
+                <li className='flex-1/6'>Total</li>
+                <li className='flex-1/6'></li>
+              </ul>
               {
                 produtos.map((array, index) => {
-
                   return (
-                    <ul className='flex justify-between items-center p-1.5 w-4/5 text-center border-1 bg-gray-100' key={array.id}>
-                      <li className='flex-1/4'>{array.nome}</li>
-                      <li className='flex-1/4'>{array.valorUni.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
-                      <li className='flex-1/4 flex gap-1.5'>
+                    <ul className='flex justify-between items-center p-1.5 w-4/5 h-14 text-center border-1 bg-gray-100 rounded-[8px]' key={array.id}>
+                      <li className='flex-1/7'>{array.id}</li>
+                      <li className='flex-1/5'>{array.nome}</li>
+                      <li className='flex-1/5'>{array.valorUni.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                      <li className='flex-1/7 flex gap-2.5'>
                         {
                           <button className='bg-blue-500 w-6 h-6 rounded-[30%] hover:cursor-pointer'
                             onClick={(e) => { subProduct(e, array, index) }}>-
@@ -190,25 +202,32 @@ function App() {
                           </button>
                         }
                       </li>
-                      <li className='flex-1/4'>{(valoTotal[array.id]) && valoTotal[array.id].toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || array.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                      <li className='flex-1/5'>{(valoTotal[array.id]) && valoTotal[array.id].toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || array.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                      </li>
+                      <button className=' flex-1/9 bg-red-600 text-white font-bold h-full rounded-[8px] hover:cursor-pointer'
+                        onClick={(e) => { removeProduct(array) }}>Remover
+                      </button>
                     </ul>
                   )
                 })
               }
-
+              <div className='bg-gray-100 p-1.5 w-4/5 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-[8px]'>
+                <p>Total:</p>
+                <p>{valorPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+              </div>
             </div>
 
             <div className='flex gap-1.5'>
 
               <button className='bg-blue-500 text-white font-bold py-2 px-4 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                 onClick={() => {
-                  if(produtos.length > 0){
-                  const funcionario = Number(prompt('Insira o seu ID'))
-                  vender(funcionario, produtos)
-                  console.log('você comprou:', produtos);
-                  }else{
+                  if (produtos.length > 0) {
+                    const funcionario = Number(prompt('Insira o seu ID'))
+                    vender(funcionario, produtos)
+                    console.log('você comprou:', produtos);
+                  } else {
                     alert('Insira um produto')
-                  } 
+                  }
                 }}
               >Finalizar
               </button>
