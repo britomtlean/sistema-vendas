@@ -17,12 +17,14 @@ function App() {
   const { component, setComponent } = useContext(contextVenda)
   const { items } = useProducts()
 
+  /******************************************Atualiza valor do carrinho*********************************************************** */
   useEffect(() => {
     console.log('total de produtos: ', produtos)
     const somaTotal = produtos.reduce((acumulador, item) => acumulador + item.total, 0);
     setValorPedido(somaTotal)
   }, [produtos, quantidade])
 
+  /****************************Cria objeto ao selecionar item e adiciona no carrinho*****************************************/
   const createProduct = (e, array,) => {
     e.preventDefault()
 
@@ -33,23 +35,21 @@ function App() {
       return;
     }
 
-    const quantidadeValor = 1
+    const quantidadeInicial = 1
 
     const newProduct = {
       id: array.id_produtos,
       nome: array.produto_produtos,
-      valorUni: parseFloat(array.valor_produtos.replace(',', '.')),
-      quantidade: quantidadeValor,
-      total: (parseFloat(array.valor_produtos.replace(',', '.')) * quantidadeValor)
+      valorUni: array.valor_produtos,
+      quantidade: quantidadeInicial,
+      total: (array.valor_produtos * quantidadeInicial)
     }
 
-
+    //incrementa o objeto criado na lista de arrays em setProdutos
     setProdutos((prevProdutos) => ([...prevProdutos, newProduct]))
   }
 
-
-  /******************************************************************************** */
-
+  /**********************************Aumenta a quantidade no produto********************************************** */
   const addProduct = (e, array, index) => {
     e.preventDefault();
     produtos.forEach((array, i) => {
@@ -73,9 +73,10 @@ function App() {
     })
   }
 
+  /************************************Diminui a quantidade do produto******************************************* */
   const subProduct = (e, array, index) => {
     e.preventDefault();
-    //console.log('array: ',produtos)
+
     produtos.forEach((array, i) => {
       if (i == index) {
         array.quantidade = array.quantidade <= 1 ? 1 : array.quantidade - 1
@@ -97,6 +98,7 @@ function App() {
     })
   }
 
+  //*************************************Remove produto do carrinho************************************************** */
   const removeProduct = (produto) => {
     const produtosFiltrados = produtos.filter(array => {
       if (array.id != produto.id) {
@@ -152,7 +154,7 @@ function App() {
                         <ul className='bg-gray-100 mb-1.5 p-1.5 border-b-1 w-full flex justify-between items-center flex-wrap text-center h-14 rounded-[8px]' key={array.id_produtos}>
                           <li className='flex-1/4'>{array.produto_produtos}</li>
 
-                          <li className='flex-1/4'>Valor: R$ {array.valor_produtos}</li>
+                          <li className='flex-1/4'>Valor: {array.valor_produtos.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
 
                           <li className='flex-1/4'>Estoque: {array.estoque_produtos}
                             {/* 
