@@ -1,6 +1,6 @@
 import React from "react"
 
-const url = 'http://localhost:3000/vendas'
+const url = 'http://localhost:3000/vendas/'
 
 //rota que recebe vendas efetuadas
 
@@ -17,12 +17,50 @@ export const dadosVendas = async () => {
             funcionario: array.funcionarios.nome_funcionarios,
             data: new Date(array.data_vendas).toLocaleString("pt-BR", {
                 timeZone: "America/Sao_Paulo" // garante que use o fuso correto
-            })
+            }),
+            valorTotal: array.valorTotal_vendas,
+            status: array.status
         }))
 
         console.log('vendas rebidas:', newDate)
         return newDate
     } catch (err) {
         alert(err.message)
+    }
+}
+
+//rota para atualizar status da venda
+
+export const fecharVenda = async (id) => {
+    try {
+        const res = await fetch(url+id,{
+            method: 'PUT',
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({ status: true })
+        })
+
+        const data = await res.json()
+        alert(JSON.stringify(data))
+
+    } catch (err) {
+        alert('Erro na execução')
+        console.log(err)
+    }
+}
+
+export const retornarVenda = async (id) => {
+    try {
+        const res = await fetch(url+id,{
+            method: 'PUT',
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({ status: false })
+        })
+
+        const data = await res.json()
+        alert(JSON.stringify(data))
+
+    } catch (err) {
+        alert('Erro na execução')
+        console.log(err)
     }
 }

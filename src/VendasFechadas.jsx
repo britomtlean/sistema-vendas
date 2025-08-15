@@ -5,19 +5,19 @@ import { contextVenda } from "./context/contextVenda";
 import { useVendas } from "./controller/vendascontroller";
 import DataTable from "react-data-table-component";
 import { Link} from "react-router";
-import { fecharVenda } from './services/vendas'
+import { retornarVenda } from './services/vendas'
 
 const Vendas = () => {
     const { vendas} = useVendas();
     const { produtos, setProdutos, component, setComponent } = useContext(contextVenda)
 
-    const vendasAbertas = vendas.filter(array => array.status ==  null)
+    const vendasFechadas = vendas.filter(array => array.status ==  true)
 
 useEffect(() => {
 
-    vendasAbertas
+    vendasFechadas
 
-},[vendasAbertas])
+},[vendasFechadas])
 
 
     // Definindo colunas para o DataTable
@@ -43,13 +43,13 @@ useEffect(() => {
             sortable: true,
         },
         {
-            name:"Detalhes",
-            selector: row => <Link to = {`/vendas/${row.id}`}>Abrir</Link>,
+            name:"Abrir Venda",
+            selector: row => <Link to = {`/vendas/${row.id}`}>Detalhes</Link>,
             sortable: true,
         },
         {
             name: "Ações",
-            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={() => {row.status == true ? alert('Esta venda já esta fechada!') : fecharVenda(row.id)}}>Fechar</button>,
+            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={() => {row.status == false ? alert('Esta venda já esta fechada!') : retornarVenda(row.id)}}>Devolver</button>,
             sortable: true, // permite ordenar
         },
 
@@ -62,9 +62,9 @@ useEffect(() => {
             ) : (
                 <div className="w-4/5">
                     <DataTable
-                        title="Vendas Abertas"
+                        title="Vendas Fechadas"
                         columns={columns}
-                        data={vendasAbertas}
+                        data={vendasFechadas}
                         pagination
                         highlightOnHover
                         pointerOnHover

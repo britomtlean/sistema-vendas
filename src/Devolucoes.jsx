@@ -5,19 +5,16 @@ import { contextVenda } from "./context/contextVenda";
 import { useVendas } from "./controller/vendascontroller";
 import DataTable from "react-data-table-component";
 import { Link} from "react-router";
-import { fecharVenda } from './services/vendas'
 
 const Vendas = () => {
     const { vendas} = useVendas();
     const { produtos, setProdutos, component, setComponent } = useContext(contextVenda)
 
-    const vendasAbertas = vendas.filter(array => array.status ==  null)
+    const devolucoes = vendas.filter(array => array.status ==  false)
 
 useEffect(() => {
 
-    vendasAbertas
-
-},[vendasAbertas])
+},[])
 
 
     // Definindo colunas para o DataTable
@@ -47,12 +44,6 @@ useEffect(() => {
             selector: row => <Link to = {`/vendas/${row.id}`}>Abrir</Link>,
             sortable: true,
         },
-        {
-            name: "Ações",
-            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={() => {row.status == true ? alert('Esta venda já esta fechada!') : fecharVenda(row.id)}}>Fechar</button>,
-            sortable: true, // permite ordenar
-        },
-
     ];
 
     return (
@@ -62,9 +53,9 @@ useEffect(() => {
             ) : (
                 <div className="w-4/5">
                     <DataTable
-                        title="Vendas Abertas"
+                        title="Devoluções"
                         columns={columns}
-                        data={vendasAbertas}
+                        data={devolucoes}
                         pagination
                         highlightOnHover
                         pointerOnHover

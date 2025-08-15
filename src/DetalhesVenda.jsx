@@ -7,9 +7,8 @@ import DataTable from 'react-data-table-component'
 
 const DetalhesVenda = () => {
 
-  const { carregarVenda, detalhesVenda } = useVendas()
+  const {vendas, carregarVenda, detalhesVenda } = useVendas()
   const url = useParams()
-  //console.log(url.id)
 
   useEffect(() => {
     carregarVenda(url.id)
@@ -42,7 +41,7 @@ const DetalhesVenda = () => {
     <div className="w-full min-h-dvh flex flex-col gap-2 justify-center items-center mx-auto">
       <div className="w-4/5">
         <DataTable
-          title={`Detalhes da venda: ${url.id}`}
+          title={`ID da venda: ${url.id}`}
           columns={columns}
           data={detalhesVenda}
           pagination
