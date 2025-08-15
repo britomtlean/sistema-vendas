@@ -147,7 +147,7 @@ function App() {
 
                 {/*****************************************************PRODUTOS********************************************************** */}
 
-                <div className='w-3/3 min-h-[280px] p-2 flex flex-col items-center justify-start bg-gray-100 rounded-[8px]' >
+                <div className='w-3/3 min-h-[280px] py-2 px-5 flex flex-col items-center justify-start bg-gray-400 rounded-[8px]' >
                   {
                     items.filter((array) => (array.produto_produtos.toLowerCase().includes(search)))
                       .map((array, index) => {
@@ -160,9 +160,7 @@ function App() {
                             <li className='flex-1/4'>Valor: {array.valor_produtos.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
 
                             <li className='flex-1/4'>Estoque: {array.estoque_produtos}
-                              {/* 
-                            <button className='bg-blue-500 w-7 h-7 rounded-[30%] hover:cursor-pointer'
-                              onClick={(e) => { addProduct(e, object) }}>+</button>*/}
+
                             </li>
                             <button className='flex-1/9 h-full bg-blue-500 text-white font-bold hover:cursor-pointer rounded-[8px]'
                               onClick={(e) => {
@@ -175,22 +173,22 @@ function App() {
                 </div>
               </form>
 
-              <div className='w-2/3 py-5 flex flex-col items-center justify-center gap-0.5 bg-gray-600 rounded-[8px]' >
-                <strong className='text-2xl mb-2.5 text-white'>Carrinho</strong>
+              <div className='w-2/3 py-5 flex flex-col items-center justify-center gap-0.5 bg-gray-400 rounded-[8px]' >
+                <strong className='text-2xl mb-2.5 text-black'>Carrinho</strong>
 
                 {/***********************************************************CARRINHO***********************************************************/}
-                <ul className='flex justify-between items-center p-1.5 w-4/5 h-14 text-center font-bold border-1 bg-gray-100 rounded-[8px]'>
-                  <li className='flex-1/7 mr-10'>Id</li>
-                  <li className='flex-1/6 mr-12 '>Produto</li>
-                  <li className='flex-1/6 mr-3  '>Valor</li>
-                  <li className='flex-1/7 mr-12'>Quantidade</li>
+                <ul className='flex flex-wrap justify-between items-center p-1.5 w-4/5 h-14 text-center font-bold border-1 bg-gray-100 rounded-[8px]'>
+                  <li className='flex-1/7'>Id</li>
+                  <li className='flex-1/6 mr-6'>Produto</li>
+                  <li className='flex-1/6'>Valor</li>
+                  <li className='flex-1/7 mr-3'>Quantidade</li>
                   <li className='flex-1/6'>Total</li>
                   <li className='flex-1/6'></li>
                 </ul>
                 {
                   produtos.map((array, index) => {
                     return (
-                      <ul className='flex justify-between items-center p-1.5 w-4/5 h-14 text-center border-1 bg-gray-100 rounded-[8px]' key={array.id}>
+                      <ul className='flex flex-wrap justify-between items-center p-1.5 w-4/5 h-14 text-center border-1 bg-gray-100 rounded-[8px]' key={array.id}>
                         <li className='flex-1/7'>{array.id}</li>
                         <li className='flex-1/5'>{array.nome}</li>
                         <li className='flex-1/5'>{array.valorUni.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
@@ -216,7 +214,7 @@ function App() {
                     )
                   })
                 }
-                <div className='bg-gray-100 p-1.5 w-4/5 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-[8px]'>
+                <div className='bg-gray-100 border-1 p-1.5 w-4/5 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-[8px]'>
                   <p>Total:</p>
                   <p>{valorPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 </div>

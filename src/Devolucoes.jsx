@@ -40,8 +40,8 @@ useEffect(() => {
             sortable: true,
         },
         {
-            name:"Detalhes",
-            selector: row => <Link to = {`/vendas/${row.id}`}>Abrir</Link>,
+            name:"Informações",
+            selector: row => <Link to = {`/vendas/${row.id}`}>Detalhes</Link>,
             sortable: true,
         },
     ];

@@ -43,13 +43,13 @@ useEffect(() => {
             sortable: true,
         },
         {
-            name:"Abrir Venda",
+            name:"Informações",
             selector: row => <Link to = {`/vendas/${row.id}`}>Detalhes</Link>,
             sortable: true,
         },
         {
             name: "Ações",
-            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={() => {row.status == false ? alert('Esta venda já esta fechada!') : retornarVenda(row.id)}}>Devolver</button>,
+            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={() => {row.status == false ? alert('Esta venda já foi devolvida!') : retornarVenda(row.id)}}>Devolver</button>,
             sortable: true, // permite ordenar
         },
 
