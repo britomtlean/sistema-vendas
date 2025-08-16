@@ -13,13 +13,6 @@ const Vendas = () => {
 
     const vendasFechadas = vendas.filter(array => array.status ==  true)
 
-useEffect(() => {
-
-    vendasFechadas
-
-},[vendasFechadas])
-
-
     // Definindo colunas para o DataTable
     const columns = [
         {

@@ -1,4 +1,5 @@
 import React from "react"
+import { baixaProdutos, devolverProdutos } from "./produtos"
 
 const url = 'http://localhost:3000/vendas/'
 
@@ -33,14 +34,23 @@ export const dadosVendas = async () => {
 
 export const fecharVenda = async (id) => {
     try {
-        const res = await fetch(url+id,{
+        const res = await fetch(url + id, {
             method: 'PUT',
-            headers: { "Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status: true })
         })
 
         const data = await res.json()
-        alert(JSON.stringify(data))
+
+        if (res.ok) {
+            try {
+                baixaProdutos(id)
+            } catch (err) {
+                alert(JSON.stringify(data) || 'Erro ao dar baixa')
+            }
+        } else {
+            alert('Erro na resposta')
+        }
 
     } catch (err) {
         alert('Erro na execução')
@@ -50,14 +60,23 @@ export const fecharVenda = async (id) => {
 
 export const retornarVenda = async (id) => {
     try {
-        const res = await fetch(url+id,{
+        const res = await fetch(url + id, {
             method: 'PUT',
-            headers: { "Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status: false })
         })
 
         const data = await res.json()
-        alert(JSON.stringify(data))
+
+        if (res.ok) {
+            try {
+                devolverProdutos(id)
+            } catch (err) {
+                alert(JSON.stringify(data) || 'Erro na devolução')
+            }
+        } else {
+            alert('Erro na resposta')
+        }
 
     } catch (err) {
         alert('Erro na execução')

@@ -22,5 +22,5 @@ export const useProducts = () => {
         carregar()
     }, [])
 
-    return { items }
+    return { items, setItems }
 }

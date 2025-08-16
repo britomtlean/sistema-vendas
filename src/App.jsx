@@ -16,13 +16,15 @@ function App() {
   const [valorPedido, setValorPedido] = useState([0.00])
 
   const { component, setComponent } = useContext(contextVenda)
-  const { items } = useProducts()
+  const { items, setItems } = useProducts()
 
   /******************************************Atualiza valor do carrinho*********************************************************** */
   useEffect(() => {
     console.log('total de produtos: ', produtos)
     const somaTotal = produtos.reduce((acumulador, item) => acumulador + item.total, 0);
     setValorPedido(somaTotal)
+
+
   }, [produtos, quantidade])
 
   /****************************Cria objeto ao selecionar item e adiciona no carrinho*****************************************/
@@ -34,6 +36,10 @@ function App() {
     if (confirmProduct) {
       alert('Este produto já está no carrinho!');
       return;
+    }
+    if(array.estoque_produtos === 0){
+      alert('Estoque insuficiente ')
+      return
     }
 
     const quantidadeInicial = 1

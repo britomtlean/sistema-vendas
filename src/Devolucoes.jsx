@@ -12,11 +12,6 @@ const Vendas = () => {
 
     const devolucoes = vendas.filter(array => array.status ==  false)
 
-useEffect(() => {
-
-},[])
-
-
     // Definindo colunas para o DataTable
     const columns = [
         {
