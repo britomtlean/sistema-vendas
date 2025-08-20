@@ -15,7 +15,7 @@ export const dadosVendas = async () => {
 
         const newDate = data.map(array => ({
             id: array.id_vendas,
-            funcionario: array.funcionarios.nome_funcionarios,
+            //funcionario: array.funcionarios.nome_funcionarios,
             data: new Date(array.data_vendas).toLocaleString("pt-BR", {
                 timeZone: "America/Sao_Paulo" // garante que use o fuso correto
             }),
