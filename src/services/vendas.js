@@ -1,7 +1,7 @@
 import React from "react"
 import { baixaProdutos, devolverProdutos } from "./produtos"
 
-const url = 'http://localhost:3000/vendas/'
+const url = 'https://vendas-config.onrender.com/vendas/'
 
 //rota que recebe vendas efetuadas
 

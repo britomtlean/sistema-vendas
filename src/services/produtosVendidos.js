@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/vendas/'
+const url = 'https://vendas-config.onrender.com/vendas/'
 
 //rota para receber detalhes sobre uma determinada venda
 

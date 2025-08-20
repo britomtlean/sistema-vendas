@@ -1,5 +1,5 @@
 
-const url = 'http://localhost:3000/produtos/'
+const url = 'https://vendas-config.onrender.com/produtos/'
 
 //rota para receber produtos
 

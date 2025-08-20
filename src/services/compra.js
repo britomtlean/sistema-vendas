@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/venderproduto'
+const url = 'https://vendas-config.onrender.com/venderproduto'
 
 //rota para efutuar venda
 
@@ -10,12 +10,21 @@ export const vender = async (idFuncionario, produtos) => {
             body: JSON.stringify({ idFuncionario, produtos })
         })
 
+
         const data = await res.json(); // <== transforma a resposta em objeto
 
         alert(data.message) //resposta do meu servidor
+        
+        if (res.ok) {
+            return true
+        } else {
+            return false
+        }
+
     } catch (err) {
         console.log('erro ao enviar', err.message)
         alert(err.message) //resposta do meu servidor
+        return false
 
     }
 }
