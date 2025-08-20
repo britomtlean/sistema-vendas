@@ -151,9 +151,9 @@ function App() {
                 <h1 className='text-amber-300 text-[2rem]'>Painel de vendas</h1>
               </header>
 
-              <section className='mx-auto flex flex-col gap-3.5 justify-center items-center w-[80vw] min-h-[100vh] border-1'>
+              <section className='mx-auto flex flex-col gap-3.5 justify-center items-center w-full min-h-[100vh] text-[0.9rem] md:w-[80vw] md:border-1'>
 
-                <form className=' flex flex-col gap-1.5 items-center justify-start  text-black text-[1.2rem]  w-2/3 min-h-[320px]'>
+                <form className=' flex flex-col gap-1.5 items-center justify-start w-7/8 min-h-[320px] text-black md:text-[1.2rem] md:w-2/3'>
                   <strong className='text-white text-3xl ' htmlFor="produto">Pesquisar</strong>
                   <input type="text"
                     name="produto"
@@ -161,18 +161,17 @@ function App() {
                     placeholder='Pesquise o produto'
                     onChange={(e) => { setSearch(e.target.value.toLowerCase()) }}
 
-                    className='outline-none bg-gray-100 rounded-[0.8rem] px-1.5 py-2 w-[70%] mb-4' />
+                    className='outline-none bg-gray-100 rounded-[0.8rem] px-1.5 py-2 w-4/5 md:w-[70%] mb-4' />
 
                   {/*****************************************************PRODUTOS********************************************************** */}
 
-                  <div className='w-3/3 min-h-[280px] py-2 px-5 flex flex-col items-center justify-start bg-gray-400 rounded-[8px]' >
+                  <div className='min-h-[280px] w-full py-2 px-5 flex flex-col items-center justify-start bg-gray-400 rounded-[8px] overflow-y-scroll md:w-3/3' >
                     {
                       items.filter((array) => (array.produto_produtos.toLowerCase().includes(search)))
                         .map((array, index) => {
-                          //const object = array.id_produtos
-                          //const valor = (!quantidade[object]) ? 1 : quantidade[object]
+
                           return (
-                            <ul className='bg-gray-100 mb-1.5 p-1.5 border-b-1 w-full flex justify-between items-center flex-wrap text-center h-14 rounded-[8px]' key={array.id_produtos}>
+                            <ul className='bg-gray-100 mb-1.5 p-1.5 border-b-1 w-full flex justify-between items-center md:flex-wrap text-center h-14 rounded-[8px]' key={array.id_produtos}>
                               <li className='flex-1/4'>{array.produto_produtos}</li>
 
                               <li className='flex-1/4'>Valor: {array.valor_produtos.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
@@ -180,23 +179,29 @@ function App() {
                               <li className='flex-1/4'>Estoque: {array.estoque_produtos}
 
                               </li>
-                              <button className='flex-1/9 h-full bg-blue-500 text-white font-bold hover:cursor-pointer rounded-[8px]'
+                              <button className='hidden h-full bg-blue-500 px-2.5 text-white font-bold hover:cursor-pointer rounded-[8px] md:flex md:flex-1/9 justify-center items-center'
                                 onClick={(e) => {
                                   createProduct(e, array, index);
                                 }}
                               >Adicionar</button>
+
+                              <button className='w-[3rem] h-full bg-blue-500 px-1.5 text-white font-bold hover:cursor-pointer rounded-[8px] md:hidden'
+                                onClick={(e) => {
+                                  createProduct(e, array, index);
+                                }}
+                              >+</button>
                             </ul>
                           )
                         })}
                   </div>
                 </form>
 
-                <div className='w-2/3 py-5 flex flex-col items-center justify-center gap-0.5 bg-gray-400 rounded-[8px]' >
+                <div className='w-7/8 max-h-[300px] overflow-y-scroll py-5 flex flex-col items-center justify-start gap-0.5 bg-gray-400 rounded-[8px] md:w-2/3' >
                   <strong className='text-2xl mb-2.5 text-black'>Carrinho</strong>
 
                   {/***********************************************************CARRINHO***********************************************************/}
-                  <ul className='flex flex-wrap justify-between items-center p-1.5 w-4/5 h-14 text-center font-bold border-1 bg-gray-100 rounded-[8px]'>
-                    <li className='flex-1/7'>Id</li>
+                  <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center font-bold border-b-1 bg-gray-100 rounded-[8px] md:flex-wrap md:w-4/5'>
+                    <li className='hidden md:flex md:flex-1/7'>Id</li>
                     <li className='flex-1/6 mr-6'>Produto</li>
                     <li className='flex-1/6'>Valor</li>
                     <li className='flex-1/7 mr-3'>Quantidade</li>
@@ -206,33 +211,36 @@ function App() {
                   {
                     produtos.map((array, index) => {
                       return (
-                        <ul className='flex flex-wrap justify-between items-center p-1.5 w-4/5 h-14 text-center border-1 bg-gray-100 rounded-[8px]' key={array.id}>
-                          <li className='flex-1/7'>{array.id}</li>
+                        <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center border-b-1 bg-gray-100 rounded-[8px] md:w-4/5' key={array.id}>
+                          <li className='hidden md:flex md:flex-1/7'>{array.id}</li>
                           <li className='flex-1/5'>{array.nome}</li>
                           <li className='flex-1/5'>{array.valorUni.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                           <li className='flex-1/7 flex gap-2.5'>
                             {
-                              <button className='bg-blue-500 w-6 h-6 rounded-[30%] hover:cursor-pointer'
+                              <button className='bg-blue-500 h-5 w-5 rounded-[30%] hover:cursor-pointer md:w-6 md:h-6'
                                 onClick={(e) => { subProduct(e, array, index) }}>-
                               </button>
                             }
                             <span>{(quantidade[array.id] || array.quantidade)}</span>
                             {
-                              <button className='bg-blue-500 w-6 h-6 rounded-[30%] hover:cursor-pointer'
+                              <button className='bg-blue-500 h-5 w-5 rounded-[30%] hover:cursor-pointer md:w-6 md:h-6'
                                 onClick={(e) => { addProduct(e, array, index) }}>+
                               </button>
                             }
                           </li>
                           <li className='flex-1/5'>{(valoTotal[array.id]) && valoTotal[array.id].toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) || array.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                           </li>
-                          <button className=' flex-1/9 bg-red-600 text-white font-bold h-full rounded-[8px] hover:cursor-pointer'
+                          <button className='hidden bg-red-600 text-white font-bold h-full rounded-[8px] hover:cursor-pointer md:flex md:flex-1/9 items-center justify-center'
                             onClick={(e) => { removeProduct(array) }}>Remover
+                          </button>
+                          <button className='flex-1/10 bg-red-600 text-[0.6rem] p-1.5 text-white font-bold rounded-[8px] hover:cursor-pointer md:flex-1/9 md:text-[0.9rem] md:hidden'
+                            onClick={(e) => { removeProduct(array) }}>X
                           </button>
                         </ul>
                       )
                     })
                   }
-                  <div className='bg-gray-100 border-1 p-1.5 w-4/5 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-[8px]'>
+                  <div className='bg-gray-100 border-b-1 p-1.5 w-7/8 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-[8px] md:w-4/5'>
                     <p>Total:</p>
                     <p>{valorPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                   </div>
@@ -256,7 +264,7 @@ function App() {
                   </button>
                 </div>
 
-                <div className='flex gap-1.5'>
+                <div className='w-7/8 flex justify-center items-center gap-1.5 flex-wrap md:w-4/5'>
 
                   <button className='bg-blue-500 text-white font-bold py-2 px-6 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                     onClick={(e) => { e.preventDefault(); setComponent('vendas') }}>Vendas Abertas
