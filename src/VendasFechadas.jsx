@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
+import { useState } from "react";
 import { contextVenda } from "./context/contextVenda";
 import { useVendas } from "./controller/vendascontroller";
 import DataTable from "react-data-table-component";
@@ -8,7 +9,7 @@ import { Link} from "react-router";
 import { retornarVenda } from './services/vendas'
 
 const Vendas = () => {
-    const { vendas} = useVendas();
+    const { vendas, setVendas, setAtivar} = useVendas();
     const { produtos, setProdutos, component, setComponent } = useContext(contextVenda)
 
     const vendasFechadas = vendas.filter(array => array.status ==  true)
@@ -42,7 +43,7 @@ const Vendas = () => {
         },
         {
             name: "Ações",
-            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={() => {row.status == false ? alert('Esta venda já foi devolvida!') : retornarVenda(row.id)}}>Devolver</button>,
+            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={ async() => {row.status == false ? alert('Esta venda já foi devolvida!') : await retornarVenda(row.id); setAtivar([])}}>Devolver</button>,
             sortable: true, // permite ordenar
         },
 

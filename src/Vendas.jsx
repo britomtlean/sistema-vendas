@@ -8,7 +8,7 @@ import { Link} from "react-router";
 import { fecharVenda } from './services/vendas'
 
 const Vendas = () => {
-    const { vendas} = useVendas();
+    const { vendas, setAtivar} = useVendas();
     const { produtos, setProdutos, component, setComponent } = useContext(contextVenda)
 
     const vendasAbertas = vendas.filter(array => array.status ==  null)
@@ -42,7 +42,7 @@ const Vendas = () => {
         },
         {
             name: "Ações",
-            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={() => {row.status == true ? alert('Esta venda já esta fechada!') : fecharVenda(row.id)}}>Concluir</button>,
+            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={ async() => {row.status == true ? alert('Esta venda já esta fechada!') : await fecharVenda(row.id); setAtivar([])}}>Concluir</button>,
             sortable: true, // permite ordenar
         },
 

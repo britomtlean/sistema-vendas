@@ -7,6 +7,7 @@ export const useVendas = () => {
 
     const [vendas, setVendas] = useState([])
     const [detalhesVenda, setDetalhesVenda] = useState([])
+    const [ativar, setAtivar ] = useState([])
 
 
 
@@ -26,7 +27,7 @@ export const useVendas = () => {
 
         carregar()
 
-    }, [detalhesVenda])
+    }, [detalhesVenda, ativar])
 
-    return { vendas, carregarVenda, detalhesVenda }
+    return { vendas, setVendas, carregarVenda, detalhesVenda, setAtivar }
 }
