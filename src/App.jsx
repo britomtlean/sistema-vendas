@@ -141,7 +141,7 @@ function App() {
 
   return (
 
-    (items.length <= 0) ? <><strong>Carregando...</strong></>
+    (items.length <= 0) ? <><div className="flex justify-center items-center text-3xl text-white w-full h-dvh">carregando...</div></>
       : (component == 'vendas') ? <Vendas />
         : (component == 'vendasFechadas') ? <VendasFechadas />
           : (component == 'devolucoes') ? <Devolucoes />
@@ -165,7 +165,7 @@ function App() {
 
                   {/*****************************************************PRODUTOS********************************************************** */}
 
-                  <div className='min-h-[280px] w-full py-2 px-5 flex flex-col items-center justify-start bg-gray-400 rounded-[8px] overflow-y-scroll md:w-3/3' >
+                  <div className='min-h-[280px] max-h-[280px] w-full py-5 px-5 flex flex-col items-center justify-start bg-gray-400 rounded-[8px] overflow-y-scroll md:w-3/3' >
                     {
                       items.filter((array) => (array.produto_produtos.toLowerCase().includes(search)))
                         .map((array, index) => {
@@ -185,7 +185,7 @@ function App() {
                                 }}
                               >Adicionar</button>
 
-                              <button className='w-[3rem] h-full bg-blue-500 px-1.5 text-white font-bold hover:cursor-pointer rounded-[8px] md:hidden'
+                              <button className='w-[1.8rem] h-2/3 bg-blue-500 px-1.5 text-white font-bold hover:cursor-pointer rounded-[8px] md:hidden'
                                 onClick={(e) => {
                                   createProduct(e, array, index);
                                 }}
@@ -196,23 +196,24 @@ function App() {
                   </div>
                 </form>
 
-                <div className='w-7/8 max-h-[300px] overflow-y-scroll py-5 flex flex-col items-center justify-start gap-0.5 bg-gray-400 rounded-[8px] md:w-2/3' >
+                <div className='w-7/8 max-h-[400px] py-5 flex flex-col items-center justify-start gap-0.5 bg-gray-400 rounded-[8px] md:w-2/3' >
                   <strong className='text-2xl mb-2.5 text-black'>Carrinho</strong>
-
+                  
                   {/***********************************************************CARRINHO***********************************************************/}
-                  <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center font-bold border-b-1 bg-gray-100 rounded-[8px] md:flex-wrap md:w-4/5'>
-                    <li className='hidden md:flex md:flex-1/7'>Id</li>
+                  <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center font-bold border-b-1 bg-gray-100 rounded-[8px] md:flex-wrap md:w-4/5 md:pl-10'>
+                    <li className='hidden md:flex md:flex-1/10'>Id</li>
                     <li className='flex-1/6 mr-6'>Produto</li>
                     <li className='flex-1/6'>Valor</li>
                     <li className='flex-1/7 mr-3'>Quantidade</li>
                     <li className='flex-1/6'>Total</li>
                     <li className='flex-1/6'></li>
                   </ul>
+                  <div className='w-full flex flex-col items-center justify-center gap-0.5 bg-gray-400 rounded-[8px] h-full overflow-y-scroll '>
                   {
                     produtos.map((array, index) => {
                       return (
-                        <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center border-b-1 bg-gray-100 rounded-[8px] md:w-4/5' key={array.id}>
-                          <li className='hidden md:flex md:flex-1/7'>{array.id}</li>
+                        <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center border-b-1 bg-gray-100 rounded-[8px] md:w-4/5 md:pl-10' key={array.id}>
+                          <li className='hidden md:flex md:flex-1/10'>{array.id}</li>
                           <li className='flex-1/5'>{array.nome}</li>
                           <li className='flex-1/5'>{array.valorUni.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                           <li className='flex-1/7 flex gap-2.5'>
@@ -233,13 +234,14 @@ function App() {
                           <button className='hidden bg-red-600 text-white font-bold h-full rounded-[8px] hover:cursor-pointer md:flex md:flex-1/9 items-center justify-center'
                             onClick={(e) => { removeProduct(array) }}>Remover
                           </button>
-                          <button className='flex-1/10 bg-red-600 text-[0.6rem] p-1.5 text-white font-bold rounded-[8px] hover:cursor-pointer md:flex-1/9 md:text-[0.9rem] md:hidden'
+                          <button className='w-[1.8rem] h-2/3 bg-red-600 text-[0.6rem] p-1.5 text-white font-bold rounded-[8px] hover:cursor-pointer md:flex-1/9 md:text-[0.9rem] md:hidden'
                             onClick={(e) => { removeProduct(array) }}>X
                           </button>
                         </ul>
                       )
                     })
                   }
+                  </div>
                   <div className='bg-gray-100 border-b-1 p-1.5 w-7/8 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-[8px] md:w-4/5'>
                     <p>Total:</p>
                     <p>{valorPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
@@ -249,10 +251,9 @@ function App() {
                       if (produtos.length > 0) {
 
                         let funcionario;
-                        // do {
                         const input = prompt("Insira o seu ID (somente números):");
                         funcionario = parseInt(input, 10);
-                        // } while (isNaN(funcionario)); //enquanto não for apenas número executara o prompt
+
                         if (isNaN(funcionario)) {
                           alert('Dados incompatíveis')
                           return
@@ -274,7 +275,7 @@ function App() {
                   </button>
                 </div>
 
-                <div className='w-7/8 flex justify-center items-center gap-1.5 flex-wrap md:w-4/5'>
+                <div className='w-7/8 flex flex-col justify-center items-center gap-1.5 flex-wrap md:w-4/5 md:flex-row'>
 
                   <button className='bg-blue-500 text-white font-bold py-2 px-6 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                     onClick={(e) => { e.preventDefault(); setComponent('vendas') }}>Vendas Abertas

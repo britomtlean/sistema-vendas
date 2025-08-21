@@ -5,14 +5,15 @@ import { useState } from "react";
 import { contextVenda } from "./context/contextVenda";
 import { useVendas } from "./controller/vendascontroller";
 import DataTable from "react-data-table-component";
-import { Link} from "react-router";
+import { Link } from "react-router";
 import { retornarVenda } from './services/vendas'
 
 const Vendas = () => {
-    const { vendas, setVendas, setAtivar} = useVendas();
+    const { vendas, setVendas, setAtivar } = useVendas();
     const { produtos, setProdutos, component, setComponent } = useContext(contextVenda)
+    const [load, setLoad] = useState(false)
 
-    const vendasFechadas = vendas.filter(array => array.status ==  true)
+    const vendasFechadas = vendas.filter(array => array.status == true)
 
     // Definindo colunas para o DataTable
     const columns = [
@@ -26,33 +27,45 @@ const Vendas = () => {
             selector: row => row.funcionario,
             sortable: true,
         },
-                {
+        {
             name: "Valor",
             selector: row => parseFloat(row.valorTotal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
             sortable: true,
         },
-                {
+        {
             name: "Data",
             selector: row => row.data,
             sortable: true,
         },
         {
-            name:"Informações",
-            selector: row => <Link to = {`/vendas/${row.id}`}>Detalhes</Link>,
+            name: "Informações",
+            selector: row => <Link to={`/vendas/${row.id}`}>Detalhes</Link>,
             sortable: true,
         },
         {
             name: "Ações",
-            selector: row => <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]" onClick={ async() => {row.status == false ? alert('Esta venda já foi devolvida!') : await retornarVenda(row.id); setAtivar([])}}>Devolver</button>,
+            selector: row =>
+                <button className=" bg-blue-600 px-1.5 py-1 text-white rounded-[8px]"
+                    onClick={async () => {
+                        row.status == false ? alert('Esta venda já foi devolvida!') :
+                        setLoad(true);
+                        await retornarVenda(row.id);
+                        setAtivar([])
+                        setTimeout(() => {
+                            setLoad(false)
+                        }, 2000);
+                    }}>Devolver</button>,
             sortable: true, // permite ordenar
         },
 
     ];
 
+     while (load == true) return <div className="flex justify-center items-center text-3xl text-white w-full h-dvh">carregando...</div>
+
     return (
         <div className="w-full min-h-dvh flex flex-col gap-2 justify-center items-center mx-auto">
             {vendas.length <= 0 ? (
-                <div>Carregando...</div>
+               <div className="flex justify-center items-center text-3xl text-white w-full h-dvh">carregando...</div>
             ) : (
                 <div className="w-4/5">
                     <DataTable
@@ -66,10 +79,10 @@ const Vendas = () => {
                     />
                 </div>
             )}
-            <button className='bg-blue-500 text-white font-bold py-2 px-6 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner w-1/8'
+            <button className='bg-blue-500 w-[200px] text-white font-bold py-2 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner md:w-1/8'
                 onClick={(e) => { e.preventDefault(); setComponent('x') }}>Painel</button>
 
-                
+
         </div>
     );
 };
