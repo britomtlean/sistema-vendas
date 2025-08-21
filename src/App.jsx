@@ -6,13 +6,13 @@ import Vendas from './Vendas';
 import VendasFechadas from './VendasFechadas'
 import Devolucoes from './Devolucoes'
 
+//FALTA AJUSTAR A RENDERIZAÇÃO E CORRIGIR O BUG nome_funcionario EM VENDAS.JS
 
 function App() {
 
   const [search, setSearch] = useState('')
   const [quantidade, setQuantidade] = useState({})
   const [valoTotal, setValorTotal] = useState({})
-  //const [produtos, setProdutos,] = useState([])
   const [valorPedido, setValorPedido] = useState([0.00])
 
   const { produtos, setProdutos, component, setComponent } = useContext(contextVenda)
@@ -247,19 +247,24 @@ function App() {
                   <button className='bg-blue-500 text-white font-bold py-2 px-10 mt-2 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                     onClick={async () => {
                       if (produtos.length > 0) {
-                        //const funcionario = Number(prompt('Insira o seu ID'))
+
                         let funcionario;
-                        do {
-                          const input = prompt("Insira o seu ID (somente números):");
-                          funcionario = parseInt(input, 10);
-                        } while (isNaN(funcionario));
-                        const response = await vender(funcionario, produtos)
-                        if (response == true) {
-                          setProdutos([])
-                          setQuantidade([])
-                          console.log('você comprou:', produtos);
-                        } else {
+                        // do {
+                        const input = prompt("Insira o seu ID (somente números):");
+                        funcionario = parseInt(input, 10);
+                        // } while (isNaN(funcionario)); //enquanto não for apenas número executara o prompt
+                        if (isNaN(funcionario)) {
+                          alert('Dados incompatíveis')
                           return
+                        } else {
+                          const response = await vender(funcionario, produtos)
+                          if (response == true) {
+                            setProdutos([])
+                            setQuantidade([])
+                            console.log('você comprou:', produtos);
+                          } else {
+                            return
+                          }
                         }
                       } else {
                         alert('Insira um produto')
