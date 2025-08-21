@@ -247,7 +247,12 @@ function App() {
                   <button className='bg-blue-500 text-white font-bold py-2 px-10 mt-2 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                     onClick={async () => {
                       if (produtos.length > 0) {
-                        const funcionario = Number(prompt('Insira o seu ID'))
+                        //const funcionario = Number(prompt('Insira o seu ID'))
+                        let funcionario;
+                        do {
+                          const input = prompt("Insira o seu ID (somente números):");
+                          funcionario = parseInt(input, 10);
+                        } while (isNaN(funcionario));
                         const response = await vender(funcionario, produtos)
                         if (response == true) {
                           setProdutos([])
