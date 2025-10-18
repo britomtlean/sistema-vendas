@@ -5,10 +5,15 @@ import App from './App.jsx'
 import { ContextProvider } from './context/contextVenda.jsx'
 import { createBrowserRouter, RouterProvider, } from 'react-router'
 import DetalhesVenda from './DetalhesVenda.jsx'
+import Loja from './Loja.jsx'
 
 const router = createBrowserRouter([{
   path: '/',
   element: <App/>
+},
+{
+  path: '/Loja',
+  element: <Loja/>
 },
 {
   path: '/vendas/:id',

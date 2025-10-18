@@ -10,8 +10,8 @@ import Devolucoes from './Devolucoes'
 
 function App() {
 
-  const [search, setSearch] = useState('')
-  const [quantidade, setQuantidade] = useState({})
+  const [search, setSearch] = useState('') // dados digitados para pesquisa
+  const [quantidade, setQuantidade] = useState({}) // 
   const [valoTotal, setValorTotal] = useState({})
   const [valorPedido, setValorPedido] = useState([0.00])
 
@@ -141,17 +141,17 @@ function App() {
 
   return (
 
-    (items.length <= 0) ? <><div className="flex justify-center items-center text-3xl text-white w-full h-dvh">carregando...</div></>
+    (items.length <= 0) ? <><div className="flex justify-center items-center text-[1rem] text-white w-full h-dvh animate-ping">carregando...</div></>
       : (component == 'vendas') ? <Vendas />
         : (component == 'vendasFechadas') ? <VendasFechadas />
           : (component == 'devolucoes') ? <Devolucoes />
             :
             <>
-              <header className='mx-auto flex flex-col gap-3.5 justify-center items-center w-[100vw] min-h-[5rem] bg-gray-900'>
-                <h1 className='text-amber-300 text-[2rem]'>Painel de vendas</h1>
+              <header className='mx-auto mb-4 flex flex-col gap-3.5 justify-center items-center w-[100vw] min-h-[5rem] bg-gray-900'>
+                <h1 className='text-gray-300 text-[2rem]'>Painel de vendas</h1>
               </header>
 
-              <section className='mx-auto flex flex-col gap-3.5 justify-center items-center w-full min-h-[100vh] text-[0.9rem] md:w-[80vw] md:border-1'>
+              <section className='mx-auto flex flex-col gap-3.5 justify-start items-center w-full min-h-[100vh] text-[0.9rem] md:w-[80vw] md:border-1'>
 
                 <form className=' flex flex-col gap-1.5 items-center justify-start w-7/8 min-h-[320px] text-black md:text-[1.2rem] md:w-2/3'>
                   <strong className='text-white text-3xl ' htmlFor="produto">Pesquisar</strong>
@@ -165,7 +165,7 @@ function App() {
 
                   {/*****************************************************PRODUTOS********************************************************** */}
 
-                  <div className='min-h-[280px] max-h-[280px] w-full py-5 px-5 flex flex-col items-center justify-start bg-gray-400 rounded-[8px] overflow-y-scroll md:w-3/3' >
+                  <div className='min-h-[220px] max-h-[280px] w-full py-5 px-5 flex flex-col items-center justify-start bg-gray-400 rounded-[8px] overflow-y-scroll md:w-3/3' >
                     {
                       items.filter((array) => (array.produto_produtos.toLowerCase().includes(search)))
                         .map((array, index) => {
@@ -200,19 +200,19 @@ function App() {
                   <strong className='text-2xl mb-2.5 text-black'>Carrinho</strong>
                   
                   {/***********************************************************CARRINHO***********************************************************/}
-                  <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center font-bold border-b-1 bg-gray-100 rounded-[8px] md:flex-wrap md:w-4/5 md:pl-10'>
+                  <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center font-bold bg-gray-100 rounded-t-[8px] md:flex-wrap md:w-4/5 md:pl-10'>
                     <li className='hidden md:flex md:flex-1/10'>Id</li>
                     <li className='flex-1/6 mr-6'>Produto</li>
-                    <li className='flex-1/6'>Valor</li>
+                    <li className='flex-1/6 mr-2'>Valor</li>
                     <li className='flex-1/7 mr-3'>Quantidade</li>
                     <li className='flex-1/6'>Total</li>
                     <li className='flex-1/6'></li>
                   </ul>
-                  <div className='w-full flex flex-col items-center justify-center gap-0.5 bg-gray-400 rounded-[8px] h-full overflow-y-scroll '>
+                  <div className='flex flex-col items-center justify-start h-[130px] w-7/8 bg-gray-100 overflow-y-scroll overflow-x-hidden'>
                   {
                     produtos.map((array, index) => {
                       return (
-                        <ul className='flex justify-between items-center p-1.5 w-7/8 h-14 text-center border-b-1 bg-gray-100 rounded-[8px] md:w-4/5 md:pl-10' key={array.id}>
+                        <ul className='flex justify-between items-center text-[0.8rem] p-4 w-full text-center border-b-1 bg-gray-100 md:w-4/5 md:pl-10' key={array.id}>
                           <li className='hidden md:flex md:flex-1/10'>{array.id}</li>
                           <li className='flex-1/5'>{array.nome}</li>
                           <li className='flex-1/5'>{array.valorUni.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
@@ -234,7 +234,7 @@ function App() {
                           <button className='hidden bg-red-600 text-white font-bold h-full rounded-[8px] hover:cursor-pointer md:flex md:flex-1/9 items-center justify-center'
                             onClick={(e) => { removeProduct(array) }}>Remover
                           </button>
-                          <button className='w-[1.8rem] h-2/3 bg-red-600 text-[0.6rem] p-1.5 text-white font-bold rounded-[8px] hover:cursor-pointer md:flex-1/9 md:text-[0.9rem] md:hidden'
+                          <button className='bg-red-600 text-[0.6rem] p-2 text-white font-bold rounded-[8px] hover:cursor-pointer md:flex-1/9 md:text-[0.9rem] md:hidden'
                             onClick={(e) => { removeProduct(array) }}>X
                           </button>
                         </ul>
@@ -242,7 +242,7 @@ function App() {
                     })
                   }
                   </div>
-                  <div className='bg-gray-100 border-b-1 p-1.5 w-7/8 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-[8px] md:w-4/5'>
+                  <div className='bg-gray-100 border-b-1 p-1.5 w-7/8 flex flex-col gap-0.5 justify-center items-center flex-wrap text-center font-bold h-10 rounded-b-[8px] md:w-4/5'>
                     <p>Total:</p>
                     <p>{valorPedido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                   </div>
@@ -275,7 +275,7 @@ function App() {
                   </button>
                 </div>
 
-                <div className='w-7/8 flex flex-col justify-center items-center gap-1.5 flex-wrap md:w-4/5 md:flex-row'>
+               {/* <div className='w-7/8 flex flex-col justify-center items-center gap-1.5 flex-wrap md:w-4/5 md:flex-row'>
 
                   <button className='bg-blue-500 text-white font-bold py-2 px-6 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                     onClick={(e) => { e.preventDefault(); setComponent('vendas') }}>Vendas Abertas
@@ -286,8 +286,9 @@ function App() {
                   <button className='bg-blue-500 text-white font-bold py-2 px-6 rounded shadow-md hover:cursor-pointer active:scale-95 transition-transform duration-100 active:shadow-inner'
                     onClick={(e) => { e.preventDefault(); setComponent('devolucoes') }}>Devoluções
                   </button>
+                
 
-                </div>
+                </div> */}
 
               </section>
             </>
