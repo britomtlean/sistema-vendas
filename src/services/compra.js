@@ -26,7 +26,7 @@ export const vender = async (idFuncionario, produtos) => {
 
         if (res.ok) {
 
-            const socket = io("http://localhost:3001", {
+            const socket = io("https://vendas-config.onrender.com", {
                 transports: ["websocket"], // força uso de websocket puro
                 withCredentials: true
             });
