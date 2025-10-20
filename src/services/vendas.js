@@ -1,7 +1,7 @@
 import React from "react"
 import { baixaProdutos, devolverProdutos } from "./produtos"
 
-const url = 'https://vendas-config.onrender.com/vendas/'
+const url = 'https://servidor-sistema-vendas.up.railway.app/vendas/'
 
 //rota que recebe vendas efetuadas
 

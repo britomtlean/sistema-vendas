@@ -1,5 +1,5 @@
 
-const url = 'https://vendas-config.onrender.com/produtos/'
+const url = 'https://servidor-sistema-vendas.up.railway.app/produtos/'
 
 //rota para receber produtos
 

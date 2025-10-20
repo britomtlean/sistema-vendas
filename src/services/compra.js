@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 
 
 
-const url = 'https://servidor-sistema-vendas.up.railway.app/'
+const url = 'https://servidor-sistema-vendas.up.railway.app/venderproduto'
 
 //rota para efutuar venda
 
@@ -26,7 +26,7 @@ export const vender = async (idFuncionario, produtos) => {
 
         if (res.ok) {
 
-            const socket = io("https://vendas-config.onrender.com", {
+            const socket = io("https://servidor-sistema-vendas.up.railway.app/", {
                 transports: ["websocket"], // força uso de websocket puro
                 withCredentials: true
             });
