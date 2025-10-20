@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 
 
 
-const url = 'https://vendas-config.onrender.com/venderproduto'
+const url = 'https://servidor-sistema-vendas.up.railway.app/'
 
 //rota para efutuar venda
 
